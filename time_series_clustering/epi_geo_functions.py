@@ -245,8 +245,8 @@ def bootstrap_network_edgeweight(G):
 	
 	Galt = nx.Graph()
     
-    #draw a bootstrap edge weight with Poi(lamda = curr_weight), at least 1
-	edges = [(u,v, max(np.random.poisson(d['weight']),1)) for u,v,d in G.edges(data=True)]
+    #draw a bootstrap edge weight +/- Normal(0, 0.05)
+	edges = [(u,v, d['weight']+np.random.normal(loc = 0,scale = 0.05)) for u,v,d in G.edges(data=True)]
     
 	Galt.add_weighted_edges_from(edges)
 	
