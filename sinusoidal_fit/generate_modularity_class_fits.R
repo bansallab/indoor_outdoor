@@ -9,20 +9,21 @@ library(lme4)
 library(nlme)
 library(broom.mixed)
 library(mgcv)
+library(arrow)
 
 ##################s
 # Read in data
 
-clusters <- read_csv('data/fips_modulclass.csv') %>% 
+clusters <- read_parquet('sinusoidal_fits/fips_modulclass.parquet') %>% 
   select(-X1) %>% 
   rename(fips = node) %>% 
   mutate(fips = as.double(fips))
 
-df.fips <- read_csv('data/state_and_county_fips_master.csv') %>% 
+df.fips <- read_parquet('sinusoidal_fits/state_and_county_fips_master.parquet') %>% 
   mutate(fips = if_else(fips ==02270, 02158, fips),
          fips = if_else(fips == 46113, 46102, fips))
 
-df.full <- read_csv('data/indoor_outdoor_ratio_unsmoothed.csv') %>% 
+df.full <- read_csv('sinusoidal_fits/indoor_outdoor_ratio_unsmoothed.csv') %>% 
   left_join(df.fips) %>% 
   left_join(clusters) %>% 
   filter(!is.na(fips), !is.na(state), !is.na(week), !is.na(modularity_class)) %>% 
@@ -76,7 +77,7 @@ params <- df.full %>%
 params %>% 
   select(modularity_class, tidied) %>% 
   unnest(tidied) %>% 
-  write_csv('data/gam_cluster_fits.csv')
+  write_csv('./gam_cluster_fits.csv')
 
 params %>% 
   select(modularity_class, preds) %>% 
@@ -85,4 +86,4 @@ params %>%
   mutate(t = row_number()) %>% 
   ungroup() %>% 
   left_join(df.full %>% select(week, t) %>% unique()) %>% 
-  write_csv('data/gam_cluster_preds.csv')
+  write_csv('./gam_cluster_preds.csv')
