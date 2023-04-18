@@ -1,5 +1,5 @@
 # Disentangling the rhythms of human activity in the built environment for airborne transmission risk
-This repository provides the data and source code for the following study: Zachary Susswein, Eva Rest, Shweta Bansal. "Disentangling the rhythms of human activity in the built environment for airborne transmission risk". https://doi.org/10.1101/2022.04.07.22273578 (currently in peer review)
+This repository provides the data and source code for the following study: Zachary Susswein, Eva Rest, Shweta Bansal. "Disentangling the rhythms of human activity in the built environment for airborne transmission risk". * *Elife* *, 2023. https://doi.org/10.7554/eLife.80466
 
 ## Deriving the metric
 In the `deriving_indoor_activity_metric` directory, we provide the code for deriving the indoor activity metric using the Safegraph Weekly Patterns data (which are available for researchers directly from Safegraph). We also provide the file of indoor/outdoor classifications that we derived for each Safegraph POI.
